@@ -40,13 +40,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: Conventional Changelog
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v2
+        uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file: 'CHANGELOG.md'
           tag-prefix: 'v'
           release-count: 0
-          package-json: './package.json'
+          fallback-version: '0.1.0'
       - name: Create Release
         uses: actions/create-release@v1
         env:

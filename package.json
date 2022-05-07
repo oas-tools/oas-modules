@@ -2,11 +2,10 @@
   "name": "oas-modules",
   "type": "module",
   "description": "Modules for oas-tools",
-  "main": "src/index.js",
   "author": "ISA Group, University of Seville",
   "license": "Apache-2.0",
   "exports": {
-    "." : "./src/index.js"
+    "./sla-rate-limit": "./src/sla-rate-limit/index.js"
   },
   "files": [
     "src"
@@ -20,5 +19,10 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "express-rate-limit": "^6.4.0",
+    "express-slow-down": "^1.4.0",
+    "oas-devtools": "^0.1.0"
   }
 }

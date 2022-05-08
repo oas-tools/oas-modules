@@ -11,7 +11,7 @@ export class SLARateLimit extends OASBase {
         const limiter = rateLimit(config.rateLimit);
         const speedLimiter = slowDown(config.speedLimit);
 
-        return SLARateLimit(oasDoc, (req, res, next) => {
+        return new SLARateLimit(oasDoc, (req, res, next) => {
             speedLimiter(req, res, () => {
                 limiter(req, res, next);
             });

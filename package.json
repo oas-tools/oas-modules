@@ -1,11 +1,11 @@
 {
-  "name": "oas-modules",
+  "name": "sla-rate-limit",
   "type": "module",
-  "description": "Modules for oas-tools",
+  "description": "Rate limit requests based on SLA4OAI",
   "author": "ISA Group, University of Seville",
   "license": "Apache-2.0",
   "exports": {
-    "./sla-rate-limit": "./src/sla-rate-limit/index.js"
+    ".": "./src/index.js"
   },
   "files": [
     "src"
@@ -23,6 +23,8 @@
   "dependencies": {
     "express-rate-limit": "^6.4.0",
     "express-slow-down": "^1.4.0",
+    "json-schema-ref-parser": "^9.0.9",
+    "lodash": "^4.17.21",
     "oas-devtools": "^0.1.0"
   }
 }

@@ -34,7 +34,7 @@ export function getConfig(plan, config, scopeType) {
       }
     });
     acc[endp] = _.merge(
-      scopeType === "quotas" ? config.rateLimit : config.slowDown,
+      scopeType === "quotas" ? config.rateLimit : config.speedLimit,
       acc[endp]
     );
     return acc;

@@ -1,0 +1,41 @@
+{
+  "name": "@oas-tools/sla-rate-limit",
+  "type": "module",
+  "description": "Rate limit requests based on SLA4OAI",
+  "author": "ISA Group, University of Seville",
+  "license": "Apache-2.0",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint src --ext .mjs --ext .js",
+    "format": "npm run lint -- --fix"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.14.0"
+  },
+  "dependencies": {
+    "@oas-tools/commons": "^1.0.0",
+    "express-rate-limit": "^6.4.0",
+    "express-slow-down": "^1.4.0",
+    "json-schema-ref-parser": "^9.0.9",
+    "lodash": "^4.17.21"
+  },
+  "keywords": [
+    "OpenAPI",
+    "REST",
+    "OAS",
+    "Rate",
+    "Limit",
+    "SLA",
+    "ANS",
+    "Module",
+    "Tools"
+  ]
+}

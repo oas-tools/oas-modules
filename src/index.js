@@ -1,15 +1,17 @@
 import $RefParser from "@apidevtools/json-schema-ref-parser";
-import { getConfig } from "./utils";
-import { OASBase } from "oas-devtools/middleware";
+import { getConfig } from "./utils/index.js";
+import { OASBase } from "@oas-tools/commons";
 import rateLimit from "express-rate-limit";
 import slowDown from "express-slow-down";
 
-let rateLimitCfg;
-let slowDownCfg;
-
 export class SLARateLimit extends OASBase {
-  constructor(oasFile, middleware) {
-    super(oasFile, middleware);
+  #rateLimitCfg;
+  #slowDownCfg;
+
+  constructor(oasFile, rateLimitCfg, slowDownCfg) {
+    super(oasFile);
+    this.#rateLimitCfg = rateLimitCfg;
+    this.#slowDownCfg = slowDownCfg;
   }
 
   static async initialize(oasDoc, config) {
@@ -18,20 +20,20 @@ export class SLARateLimit extends OASBase {
     );
     const plan = slaFile.plans[config.currentPlan ?? "base"];
 
-    rateLimitCfg = plan.quotas ? getConfig(plan, config, "quotas") : null;
-    slowDownCfg = plan.rates ? getConfig(plan, config, "rates") : null;
+    let rateLimitCfg = plan.quotas ? getConfig(plan, config, "quotas") : null;
+    let slowDownCfg = plan.rates ? getConfig(plan, config, "rates") : null;
 
-    return new SLARateLimit(oasDoc);
+    return new SLARateLimit(oasDoc, rateLimitCfg, slowDownCfg);
   }
 
   register(app) {
     // Register for endpoints with rates and quotas defined
-    if (slowDownCfg) {
-      Object.entries(slowDownCfg).forEach(([endpoint, slowDownConf]) => {
+    if (this.#slowDownCfg) {
+      Object.entries(this.#slowDownCfg).forEach(([endpoint, slowDownConf]) => {
         let middleware;
         const speedLimiter = slowDown(slowDownConf);
-        if (rateLimitCfg?.[endpoint]?.operation === slowDownConf.operation) {
-          const limiter = rateLimit(rateLimitCfg[endpoint]);
+        if (this.#rateLimitCfg?.[endpoint]?.operation === slowDownConf.operation) {
+          const limiter = rateLimit(this.#rateLimitCfg[endpoint]);
           middleware = (req, res, next) =>
             speedLimiter(req, res, () => limiter(req, res, next));
         } else {
@@ -42,11 +44,11 @@ export class SLARateLimit extends OASBase {
     }
 
     // Register for endpoints with only quotas defined
-    if (rateLimitCfg) {
-      Object.entries(rateLimitCfg)
+    if (this.#rateLimitCfg) {
+      Object.entries(this.#rateLimitCfg)
         .filter(
           ([endpoint, rateLimitConf]) =>
-            !slowDownCfg?.[endpoint]?.operation === rateLimitConf.operation
+            this.#slowDownCfg?.[endpoint]?.operation !== rateLimitConf.operation
         )
         .forEach(([endpoint, rateLimitConf]) => {
           const limiter = rateLimit(rateLimitConf);

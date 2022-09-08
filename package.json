@@ -1,5 +1,5 @@
 {
-  "name": "sla-rate-limit",
+  "name": "@oas-tools/sla-rate-limit",
   "type": "module",
   "description": "Rate limit requests based on SLA4OAI",
   "author": "ISA Group, University of Seville",
@@ -21,10 +21,21 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
+    "@oas-tools/commons": "^1.0.0",
     "express-rate-limit": "^6.4.0",
     "express-slow-down": "^1.4.0",
     "json-schema-ref-parser": "^9.0.9",
-    "lodash": "^4.17.21",
-    "oas-devtools": "^0.1.0"
-  }
+    "lodash": "^4.17.21"
+  },
+  "keywords": [
+    "OpenAPI",
+    "REST",
+    "OAS",
+    "Rate",
+    "Limit",
+    "SLA",
+    "ANS",
+    "Module",
+    "Tools"
+  ]
 }

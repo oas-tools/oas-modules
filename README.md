@@ -8,7 +8,7 @@
 ![node-current](https://img.shields.io/node/v/@oas-tools/sla-rate-limit)
 ![npm](https://img.shields.io/npm/dw/@oas-tools/sla-rate-limit)
 [![Node.js CI](https://github.com/oas-tools/sla-rate-limit/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/oas-tools/sla-rate-limit/actions/workflows/nodejs.yaml)
-[![Known Vulnerabilities](https://snyk.io/test/github/oas-tools/sla-rate-limit/main/badge.svg)](https://snyk.io/test/github/oas-tools/oas-auth)
+[![Known Vulnerabilities](https://snyk.io/test/github/oas-tools/sla-rate-limit/main/badge.svg)](https://snyk.io/test/github/oas-tools/sla-rate-limit)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
 </div>
 

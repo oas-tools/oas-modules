@@ -15,10 +15,7 @@
     "format": "npm run lint -- --fix"
   },
   "devDependencies": {
-    "eslint": "^8.14.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.2"
+    "eslint": "^8.14.0"
   },
   "dependencies": {
     "@oas-tools/commons": "^1.0.0",

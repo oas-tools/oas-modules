@@ -6,6 +6,7 @@ import slowDown from "express-slow-down";
 
 export class SLARateLimit extends OASBase {
   #rateLimitCfg;
+
   #slowDownCfg;
 
   constructor(oasFile, rateLimitCfg, slowDownCfg) {
@@ -20,8 +21,8 @@ export class SLARateLimit extends OASBase {
     );
     const plan = slaFile.plans[config.currentPlan ?? "base"];
 
-    let rateLimitCfg = plan.quotas ? getConfig(plan, config, "quotas") : null;
-    let slowDownCfg = plan.rates ? getConfig(plan, config, "rates") : null;
+    const rateLimitCfg = plan.quotas ? getConfig(plan, config, "quotas") : null;
+    const slowDownCfg = plan.rates ? getConfig(plan, config, "rates") : null;
 
     return new SLARateLimit(oasDoc, rateLimitCfg, slowDownCfg);
   }

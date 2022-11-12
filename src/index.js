@@ -16,7 +16,7 @@ export class SLARateLimit extends OASBase {
     const store = new metaStore(slaFile, config);
     
     const middleware = (req, res, next) => {
-      let plan = res.locals.oas?.security?.[config.scheme]?.plan;
+      let plan = res.locals.oas?.security?.[config.scheme ?? "apikey"]?.plan;
       if (!slaFile.plans[plan]) {
         logger.warn(`plan ${plan} is not defined in the SLA.`);
         plan = Object.keys(slaFile.plans)[0];

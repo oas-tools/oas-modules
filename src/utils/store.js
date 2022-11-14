@@ -11,7 +11,7 @@ export default class metaStore {
     }
 
     add(key) {
-        const [_ip, plan, method, path] = key.split("-");
+        const [_ip, plan, method, path] = key.split("%%");
         const planObj = this.slaFile.plans[plan];
         const rateLimitCfg = planObj.quotas ? getConfig(planObj, this.config, "quotas")?.[`${method}-${path}`] : null;
         const slowDownCfg = planObj.rates ? getConfig(planObj, this.config, "rates")?.[`${method}-${path}`] : null;

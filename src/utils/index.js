@@ -32,7 +32,7 @@ export function getConfig(plan, config, scopeType) {
         cfg[endpoint].maxDelayMs = cfg[endpoint].delayMs;
       }
     });
-    return cfg;
+    return {...acc, ...cfg};
   }, {});
 }
 

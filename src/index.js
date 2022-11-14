@@ -23,8 +23,8 @@ export class SLARateLimit extends OASBase {
       }
       logger.info(`Using "${plan}" plan`);
 
-      const endpoint = `${req.method}-${req.path}`;
-      const key = `${req.ip}-${plan}-${endpoint}`;
+      const endpoint = `${req.method}%%${req.route.path}`;
+      const key = `${req.ip}%%${plan}%%${endpoint}`;
       
       let limiters = store.get(key);
       if (!limiters) limiters = store.add(key);

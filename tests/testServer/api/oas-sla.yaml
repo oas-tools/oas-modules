@@ -1,0 +1,63 @@
+sla: 1.0.0
+context:
+  id: rate-limit-sample
+  type: plans
+  api:
+    $ref: ./3.0.yaml
+  provider: ISAGroup
+metrics:
+  requests:
+    type: "int64"
+    description: "Number of requests"
+plans:
+  base:
+    rates:
+      /api/v1/bearerjwt:
+        get:
+          requests:
+          - max: 1
+            period: second
+        post:
+          requests:
+          - max: 2
+            period: second
+    quotas:
+      /api/v1/bearerjwt:
+        get:
+          requests:
+          - max: 2
+            period: minute
+  premium:
+    rates:
+      /api/v1/bearerjwt:
+        get:
+          requests:
+          - max: 3
+            period: second
+        post:
+          requests:
+          - max: 5
+            period: second
+      /api/v1/bearerjwt/{param}:
+        get:
+          requests:
+          - max: 2
+            period: second
+    quotas:
+      /api/v1/bearerjwt:
+        get:
+          requests:
+          - max: 5
+            period: minute
+      /api/v1/bearerjwt/{param}:
+        get:
+          requests:
+          - max: 2
+            period: minute
+  noquotas:
+    rates:
+      /api/v1/bearerjwt:
+        get:
+          requests:
+          - max: 1
+            period: second

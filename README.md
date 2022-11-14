@@ -8,8 +8,9 @@
 ![node-current](https://img.shields.io/node/v/@oas-tools/sla-rate-limit)
 ![npm](https://img.shields.io/npm/dw/@oas-tools/sla-rate-limit)
 [![Node.js CI](https://github.com/oas-tools/sla-rate-limit/actions/workflows/nodejs.yaml/badge.svg)](https://github.com/oas-tools/sla-rate-limit/actions/workflows/nodejs.yaml)
-[![Known Vulnerabilities](https://snyk.io/test/github/oas-tools/sla-rate-limit/main/badge.svg)](https://snyk.io/test/github/oas-tools/sla-rate-limit)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
+[![Known Vulnerabilities](https://snyk.io/test/github/oas-tools/sla-rate-limit/main/badge.svg)](https://snyk.io/test/github/oas-tools/sla-rate-limit)
+[![Coverage Status](https://coveralls.io/repos/github/oas-tools/sla-rate-limit/badge.svg?branch=main)](https://coveralls.io/github/oas-tools/sla-rate-limit?branch=main)
 </div>
 
 ## Contents
@@ -44,7 +45,7 @@ import { SLARateLimit } from "@oas-tools/sla-rate-limit";
 
 const app = express();
 
-use(SLARateLimit, {/* Config object */}, 0);
+use(SLARateLimit, {/* Config object */}, 2);
 initialize(app).then(() => {
   http.createServer(app).listen(serverPort, () => {
     /* callback */
@@ -52,7 +53,7 @@ initialize(app).then(() => {
 })
 ```
 
-> Notice the third parameter used in the `use` function. Since the rate limitting action should be performed before processing any request, the SLA Rate Limit middleware is inserted in the position `0` of the express chain.
+> Notice the third parameter used in the `use` function. Since the rate limitting action should be performed before processing any request, but after validating any security token, the SLA Rate Limit middleware is inserted in the position `2` of the express chain.
 
 ### Configuration
 The configuration is set through the second parameter of the `use` function. The table below describes the possible configuration options currently supported by the middleware:
@@ -61,9 +62,7 @@ The configuration is set through the second parameter of the `use` function. The
 |-------------------	|:--------:	|---------------------------------------------------------------------------------------|------------------	|
 | slaFile           	|  String  	| absolute or relative URI to the SLA file                                             	| api/oas-sla.yaml 	|
 | requestIdentifier 	|  String  	| Name used in the SLA to identify the requests metric                                 	| requests         	|
-| currentPlan       	|  String  	| The SLA plan that is being used                                                      	| base             	|
-| rateLimit         	|  Object  	| [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) config params 	| {}               	|
-| speedLimit        	|  Object  	| [express-slow-down](https://www.npmjs.com/package/express-slow-down) config params   	| {}               	|
+| scheme             	|  String  	| Security scheme containing the token with the plan the user is suscribed to           | apikey            |
 
 ## SLA document
 This rate limit middleware requires a service level agreement file, in which the declaration for rates and quotas are found. This file should be located by default at `api/oas-sla.yaml`, but this option can be overriden through configuration, as explained above.
@@ -101,7 +100,7 @@ plans:
 This way, when making multiple requests to `/api/v1/resources/1`, the requests will be delayed in order to meet the rate criteria, whereas when making more requests than specified in the quotas object, the server response code will be `429` since the quota limit has been exceeded.
 
 ### Plans
-As shown in the example in the previous section, the SLA document must contain `plans` in which the rates and quotas are defined. The SLA Rate Limit middleware receives the plan that will be used in configuration (by default is `base`, as explained in [configuration section](#configuration)). This way, multiple plans containing different rates can be declared, making the server _suscribe_ to one or another based on configuration (restaring the server is required when changing a plan).
+As shown in the example in the previous section, the SLA document must contain `plans` in which the rates and quotas are defined. The SLA Rate Limit middleware receives a token that must contain a **plan** attribute (by default is `base`, as explained in [configuration section](#configuration)). This way, multiple plans containing different rates can be declared, making the server _suscribe_ to one or another based on configuration (restaring the server is required when changing a plan).
 
 ### Rates
 Rates are managed by the [express-slow-down](https://www.npmjs.com/package/express-slow-down) middleware. This middleware will input delay on the requests in order to meet the dynamic window specified under the rates object in the SLA Document.

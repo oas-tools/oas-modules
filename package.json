@@ -12,13 +12,21 @@
   ],
   "scripts": {
     "lint": "eslint src --ext .mjs --ext .js",
-    "format": "npm run lint -- --fix"
+    "format": "npm run lint -- --fix",
+    "test": "mocha ./tests/index.test.js --timeout 100000",
+    "cov": "c8 --all --reporter=lcov --reporter=text npm run test"
   },
   "engines": {
     "node": ">=14.0.0"
   },
   "devDependencies": {
-    "eslint": "^8.14.0"
+    "@oas-tools/core": "^3.0.2",
+    "apipecker": "^1.3.1",
+    "c8": "^7.12.0",
+    "eslint": "^8.14.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^10.1.0"
   },
   "dependencies": {
     "@oas-tools/commons": "^1.0.0",

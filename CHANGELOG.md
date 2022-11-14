@@ -1,4 +1,21 @@
-# 0.1.0 (2022-09-08)
+# [1.0.0](https://github.com/oas-tools/sla-rate-limit/compare/v0.1.0...v1.0.0) (2022-11-14)
+
+
+* feat!: First release ([49d4001](https://github.com/oas-tools/sla-rate-limit/commit/49d40015b318269225e525fb5a89a2234b4267cf))
+
+
+### Features
+
+* Implemented apikey based rate limiting ([566205b](https://github.com/oas-tools/sla-rate-limit/commit/566205b47aa1368a01dd94ed4811c0ca58e56812))
+
+
+### BREAKING CHANGES
+
+* Support for plans on middleware configuration removed
+
+
+
+# [0.1.0](https://github.com/oas-tools/sla-rate-limit/compare/dbcc472e558b11733ab8a647f345e6b03756d6ae...v0.1.0) (2022-09-08)
 
 
 ### Bug Fixes
